@@ -1,1 +1,938 @@
-# ali
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت‌نام</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sign-up page styles */
+        .signup-page {
+            background-image: url('https://cdn.imgurl.ir/uploads/s6214_InShot__.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signup-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .signup-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .signup-title {
+            text-align: center;
+            color: #FFD700;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #FFD700;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .signup-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 15px;
+            color: #000;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .signup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #FFA500, #FFD700);
+        }
+
+        .signup-button:active {
+            transform: translateY(0);
+        }
+
+        /* Game menu page styles */
+        .game-menu {
+            display: none;
+            background-image: url('https://cdn.imgurl.ir/uploads/w253923_InShot__.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+        }
+
+        .game-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .game-header {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: 2px solid #FFD700;
+            background-image: url('https://cdn.imgurl.ir/uploads/f32084_IMG_20250827_144709_907.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .user-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-icon {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .game-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .start-game-button {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 20px;
+            padding: 20px 60px;
+            color: #000;
+            font-size: 24px;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .start-game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Avatar selection page styles */
+        .avatar-page {
+            display: none;
+            background-image: url('https://cdn.imgurl.ir/uploads/s6214_InShot__.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+        }
+
+        .avatar-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .avatar-header {
+            position: relative;
+            z-index: 2;
+            padding: 20px 25px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .avatar-title {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .avatar-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            padding: 50px 20px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 80px;
+        }
+
+        .avatar-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+            flex-wrap: nowrap;
+        }
+
+        .avatar-card {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .avatar-card:hover {
+            transform: translateY(-5px);
+            border-color: #FFD700;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .avatar-card.active {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .avatar-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto 15px;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+        }
+
+        .avatar-status {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .avatar-status:hover {
+            background: linear-gradient(135deg, #FFA500, #FFD700);
+        }
+
+        .avatar-status.active-status {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            z-index: 3;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        /* Scenario selection panel styles */
+        .scenario-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scenario-panel {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .scenario-title {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 0, 0, 0.7);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-panel:hover {
+            background: rgba(255, 0, 0, 0.9);
+        }
+
+        .scenario-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .scenario-card {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            border-color: #FFD700;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .scenario-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .scenario-name {
+            color: #FFD700;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .scenario-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Search page styles */
+        .search-page {
+            display: none;
+            background-image: url('https://cdn.imgurl.ir/uploads/s6214_InShot__.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+        }
+
+        .search-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .search-header {
+            position: relative;
+            z-index: 2;
+            padding: 20px 25px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .search-title {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .selected-scenario {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .search-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-animation {
+            width: 120px;
+            height: 120px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-top: 4px solid #FFD700;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            margin-bottom: 30px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .search-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-status {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cancel-search-button {
+            background: rgba(255, 0, 0, 0.7);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-search-button:hover {
+            background: rgba(255, 0, 0, 0.9);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .avatar-grid {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+
+            .avatar-image {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .signup-title {
+                font-size: 24px;
+            }
+            
+            .form-input {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            
+            .signup-button {
+                padding: 15px;
+                font-size: 16px;
+            }
+
+            .game-header {
+                padding: 15px 20px;
+            }
+
+            .game-stats {
+                gap: 10px;
+            }
+
+            .stat-item {
+                padding: 6px 10px;
+            }
+
+            .start-game-button {
+                padding: 18px 40px;
+                font-size: 20px;
+            }
+
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .user-name {
+                font-size: 16px;
+            }
+
+            .avatar-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sign-up Page -->
+    <div class="signup-page" id="signupPage">
+        <div class="signup-container">
+            <h1 class="signup-title">ثبت‌نام</h1>
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="usernameInput" placeholder="نام کاربری" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="رمز عبور" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="تکرار رمز عبور" required>
+                </div>
+                <button type="submit" class="signup-button">ثبت‌نام</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Game Menu Page -->
+    <div class="game-menu" id="gameMenu">
+        <div class="game-header">
+            <div class="user-profile">
+                <div class="user-avatar" id="currentAvatar" onclick="openAvatarSelection()"></div>
+                <div class="user-name" id="displayUsername">کاربر جدید</div>
+            </div>
+            <div class="game-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">🪙</div>
+                    <div class="stat-value">1,250</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">💎</div>
+                    <div class="stat-value">45</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value">12</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <button class="start-game-button" onclick="startGame()">شروع بازی</button>
+        </div>
+
+
+    </div>
+
+    <!-- Avatar Selection Page -->
+    <div class="avatar-page" id="avatarPage">
+        <button class="back-button" onclick="backToMenu()">← بازگشت</button>
+        
+        <div class="avatar-header">
+            <h1 class="avatar-title">انتخاب آواتار</h1>
+        </div>
+
+        <div class="avatar-content">
+            <div class="avatar-grid">
+                <div class="avatar-card active" data-avatar="1">
+                    <div class="avatar-image" style="background-image: url('https://cdn.imgurl.ir/uploads/f32084_IMG_20250827_144709_907.jpg');"></div>
+                    <button class="avatar-status active-status">آواتار فعال</button>
+                </div>
+                
+                <div class="avatar-card" data-avatar="2">
+                    <div class="avatar-image" style="background-image: url('https://cdn.imgurl.ir/uploads/k49298_IMG_20250827_160949_096.jpg');"></div>
+                    <button class="avatar-status">استفاده</button>
+                </div>
+                
+                <div class="avatar-card" data-avatar="3">
+                    <div class="avatar-image" style="background-image: url('https://cdn.imgurl.ir/uploads/m87957_IMG_20250827_164921_059.jpg');"></div>
+                    <button class="avatar-status">استفاده</button>
+                </div>
+                
+                <div class="avatar-card" data-avatar="4">
+                    <div class="avatar-image" style="background-image: url('https://cdn.imgurl.ir/uploads/a519305_IMG_20250827_164946_814.jpg');"></div>
+                    <button class="avatar-status">استفاده</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scenario Selection Panel -->
+    <div class="scenario-overlay" id="scenarioOverlay">
+        <div class="scenario-panel">
+            <button class="close-panel" onclick="closeScenarioPanel()">×</button>
+            <h1 class="scenario-title">انتخاب سناریو</h1>
+            
+            <div class="scenario-grid">
+                <div class="scenario-card" onclick="selectScenario('آتیش بازی')">
+                    <div class="scenario-icon">🎆</div>
+                    <div class="scenario-name">آتیش بازی</div>
+                    <div class="scenario-description">در این سناریو شما باید با مهارت و دقت آتیش بازی کنید</div>
+                </div>
+                
+                <div class="scenario-card" onclick="selectScenario('کارت برنده')">
+                    <div class="scenario-icon">🃏</div>
+                    <div class="scenario-name">کارت برنده</div>
+                    <div class="scenario-description">کارت‌های شما را انتخاب کنید و برنده شوید</div>
+                </div>
+                
+                <div class="scenario-card" onclick="selectScenario('اکسیر سیاه')">
+                    <div class="scenario-icon">🧪</div>
+                    <div class="scenario-name">اکسیر سیاه</div>
+                    <div class="scenario-description">اکسیر جادویی را پیدا کنید و قدرت آن را کشف کنید</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Page -->
+    <div class="search-page" id="searchPage">
+        <div class="search-header">
+            <h1 class="search-title">جستجوی کاربران</h1>
+            <div class="selected-scenario" id="selectedScenarioText">سناریو: آتیش بازی</div>
+        </div>
+
+        <div class="search-content">
+            <div class="search-animation"></div>
+            <div class="search-text">در حال جستجوی کاربران آنلاین...</div>
+            <div class="search-status" id="searchStatus">تعداد کاربران یافت شده: 0</div>
+            <button class="cancel-search-button" onclick="cancelSearch()">لغو جستجو</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const inputs = this.querySelectorAll('.form-input');
+            const username = inputs[0].value.trim();
+            const password = inputs[1].value;
+            const confirmPassword = inputs[2].value;
+            
+            // Basic validation
+            if (!username) {
+                alert('لطفاً نام کاربری را وارد کنید');
+                inputs[0].focus();
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('رمز عبور باید حداقل ۶ کاراکتر باشد');
+                inputs[1].focus();
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('رمز عبور و تکرار آن یکسان نیستند');
+                inputs[2].focus();
+                return;
+            }
+            
+            // Success animation
+            const button = this.querySelector('.signup-button');
+            button.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+            button.textContent = 'در حال ثبت‌نام...';
+            
+            setTimeout(() => {
+                button.textContent = '✓ ثبت‌نام موفق';
+                setTimeout(() => {
+                    // Navigate to game menu
+                    showGameMenu(username);
+                }, 1500);
+            }, 1500);
+        });
+
+        function showGameMenu(username) {
+            document.getElementById('signupPage').style.display = 'none';
+            document.getElementById('gameMenu').style.display = 'flex';
+            document.getElementById('displayUsername').textContent = username;
+        }
+
+        function startGame() {
+            document.getElementById('scenarioOverlay').style.display = 'flex';
+        }
+
+        function openAvatarSelection() {
+            document.getElementById('gameMenu').style.display = 'none';
+            document.getElementById('avatarPage').style.display = 'flex';
+        }
+
+        function backToMenu() {
+            document.getElementById('avatarPage').style.display = 'none';
+            document.getElementById('gameMenu').style.display = 'flex';
+        }
+
+        // Avatar selection functionality
+        const avatarUrls = {
+            1: 'https://cdn.imgurl.ir/uploads/f32084_IMG_20250827_144709_907.jpg',
+            2: 'https://cdn.imgurl.ir/uploads/k49298_IMG_20250827_160949_096.jpg',
+            3: 'https://cdn.imgurl.ir/uploads/m87957_IMG_20250827_164921_059.jpg',
+            4: 'https://cdn.imgurl.ir/uploads/a519305_IMG_20250827_164946_814.jpg'
+        };
+
+        let currentActiveAvatar = 1;
+
+        document.querySelectorAll('.avatar-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const avatarId = parseInt(this.dataset.avatar);
+                const statusButton = this.querySelector('.avatar-status');
+                
+                if (!statusButton.classList.contains('active-status')) {
+                    // Remove active status from all avatars
+                    document.querySelectorAll('.avatar-card').forEach(c => {
+                        c.classList.remove('active');
+                        const btn = c.querySelector('.avatar-status');
+                        btn.classList.remove('active-status');
+                        btn.textContent = 'استفاده';
+                    });
+                    
+                    // Set new active avatar
+                    this.classList.add('active');
+                    statusButton.classList.add('active-status');
+                    statusButton.textContent = 'آواتار فعال';
+                    
+                    // Update profile avatar
+                    currentActiveAvatar = avatarId;
+                    document.getElementById('currentAvatar').style.backgroundImage = `url('${avatarUrls[avatarId]}')`;
+                    
+                    // Show success message
+                    setTimeout(() => {
+                        alert('آواتار با موفقیت تغییر کرد! ✨');
+                    }, 300);
+                }
+            });
+        });
+
+        function closeScenarioPanel() {
+            document.getElementById('scenarioOverlay').style.display = 'none';
+        }
+
+        function selectScenario(scenarioName) {
+            document.getElementById('scenarioOverlay').style.display = 'none';
+            document.getElementById('gameMenu').style.display = 'none';
+            document.getElementById('searchPage').style.display = 'flex';
+            document.getElementById('selectedScenarioText').textContent = `سناریو: ${scenarioName}`;
+            
+            // Start search simulation
+            startUserSearch();
+        }
+
+        function startUserSearch() {
+            let userCount = 0;
+            const searchStatus = document.getElementById('searchStatus');
+            
+            const searchInterval = setInterval(() => {
+                userCount += Math.floor(Math.random() * 3) + 1;
+                searchStatus.textContent = `تعداد کاربران یافت شده: ${userCount}`;
+                
+                if (userCount >= 10) {
+                    clearInterval(searchInterval);
+                    setTimeout(() => {
+                        alert(`بازی پیدا شد! ${userCount} کاربر آنلاین یافت شد 🎮`);
+                        // Here you can add logic to start the actual game
+                    }, 1000);
+                }
+            }, 1500);
+            
+            // Store interval ID for cancellation
+            window.currentSearchInterval = searchInterval;
+        }
+
+        function cancelSearch() {
+            if (window.currentSearchInterval) {
+                clearInterval(window.currentSearchInterval);
+            }
+            document.getElementById('searchPage').style.display = 'none';
+            document.getElementById('gameMenu').style.display = 'flex';
+        }
+
+        // Add focus effects
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97af4abec3369dc2',t:'MTc1NzE3NTYwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
